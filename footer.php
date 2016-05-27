@@ -1,15 +1,13 @@
-
+<footer>
+    <div class="container">
+        <div class="col-md-12 text-center">@ Copyright MMDB 2016</div>
+        </div>
+    </div>
+</footer>
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
-        integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
-        crossorigin="anonymous"></script>
-
-<script>
-    $(document).ready(function () {
-        $('#carousel-example-generic').find('.item').first().addClass('active');
-    });
-</script>
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.js"></script>
 </body>
 </html>

@@ -1,13 +1,28 @@
 <?php
 $title = 'Home';
 $section = 'home';
-include 'dbconnect.php';
+include 'head.php';
 
 $query = 'select BLOBID from BTAB ORDER BY BLOBID ASC';
 $stmt = oci_parse($conn, $query);
 oci_execute($stmt);
 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $username = $_POST['usernameInput'];
+    $password = $_POST['passwordInput'];
+    $query = 'select username from youtify_user where username=:p1 and password=:p2';
+    $loginStmt = oci_parse($conn, $query);
+    oci_bind_by_name($loginStmt, ':p1', $username);
+    oci_bind_by_name($loginStmt, ':p2', $password);
 
+    oci_define_by_name($loginStmt, 'USERNAME', $user);
+
+    oci_execute($loginStmt);
+
+    if (oci_fetch($loginStmt)) {
+        $_SESSION['username'] = $user;
+    }
+}
 include 'header.php'; ?>
 
 <div class="jumbotron" style="margin-bottom: 0">
@@ -17,11 +32,11 @@ include 'header.php'; ?>
 </div>
 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
-<!--    <ol class="carousel-indicators">-->
-<!--        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>-->
-<!--        <li data-target="#carousel-examp    le-generic" data-slide-to="1"></li>-->
-<!--        <li data-target="#carousel-example-generic" data-slide-to="2"></li>-->
-<!--    </ol>-->
+    <!--    <ol class="carousel-indicators">-->
+    <!--        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>-->
+    <!--        <li data-target="#carousel-examp    le-generic" data-slide-to="1"></li>-->
+    <!--        <li data-target="#carousel-example-generic" data-slide-to="2"></li>-->
+    <!--    </ol>-->
 
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox" style="margin-top: 0">
@@ -29,7 +44,9 @@ include 'header.php'; ?>
         while ($row = oci_fetch_array($stmt, OCI_ASSOC)) {
             ?>
             <div class="item">
-                <img class="img-resposive center-block" src="imageController/indexImages.php?id=<?php echo $row['BLOBID']; ?>" height="730px" width="350px">
+                <img class="img-resposive center-block"
+                     src="imageController/indexImages.php?id=<?php echo $row['BLOBID']; ?>" height="730px"
+                     width="350px">
             </div>
             <?php
         }
@@ -67,6 +84,29 @@ include 'header.php'; ?>
         </div>
     </div>
 </div>
+
+
+<div class="modal fade" id="modal-id">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form action="" method="post" role="form" autocomplete="off">
+                    <legend>Form Title</legend>
+
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control" name="usernameInput" id="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" name="passwordInput" id="password">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                </form>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <?php include 'footer.php' ?>
 

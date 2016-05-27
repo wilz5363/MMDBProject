@@ -1,7 +1,11 @@
 <?php
+session_start();
 $title = 'Songs';
 $section = 'song';
-include 'header.php';?>
+include 'header.php';
+
+
+?>
 
 
 
