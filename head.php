@@ -7,8 +7,9 @@
  */
 session_start();
 include 'dbconnect.php';
-if($section != 'home'){
-    if(!isset($_SESSION['username'])){
-        header('location:index.php');
-    }
-}
+//if($section != 'home'){
+//    if(!isset($_SESSION['username'])){
+//        header('location:index.php');
+//    }
+//}
+include "header.php";
